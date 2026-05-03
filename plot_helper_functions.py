@@ -4,11 +4,72 @@ import os
 # One color + marker per combination — consistent across all plots
 COMBO_STYLES = {
     'none':                     {'color': 'black',  'marker': 'o', 'linestyle': '-'},
-    'flip':                     {'color': 'blue',   'marker': 's', 'linestyle': '-'},
-    'flip_rotation':            {'color': 'green',  'marker': '^', 'linestyle': '-'},
-    'flip_rotation_color':      {'color': 'orange', 'marker': 'D', 'linestyle': '-'},
-    'flip_rotation_color_crop': {'color': 'purple', 'marker': 'v', 'linestyle': '-'},
-    'full':                     {'color': 'red',    'marker': '*', 'linestyle': '-'},
+    #______________________________________________________________________
+    #one transformations
+    #______________________________________________________________________
+    'flip':                     {'color': 'blue',   'marker': 's', 'linestyle': '-'},  #1
+    'none_cutmix':              {'color': 'green',  'marker': '^', 'linestyle': '-'},  #2
+    'rotation_deg_15':          {'color': 'red',    'marker': 'D', 'linestyle': '-'},  #3
+    'rotation_deg_30':          {'color': 'purple', 'marker': 'v', 'linestyle': '-'},  #4
+    'rotation_deg_90':          {'color': 'orange', 'marker': '*', 'linestyle': '-'},  #5
+    'color_0.2':                {'color': 'green',  'marker': 'x', 'linestyle': '-'},  #6
+    'color_0.3':                {'color': 'cyan',   'marker': 'p', 'linestyle': '-'},  #7
+    'crop':                     {'color': 'magenta', 'marker': 'd', 'linestyle': '-'}, #8
+
+    #_______________________________________________________________________________
+    # Two transformations
+    # best degree rotation: 15
+    # best color_brightness_contrast: 0.3
+    #_______________________________________________________________________________
+    'crop_cutmix':              {'color': 'tab:blue',   'marker': 's', 'linestyle': '-'},
+    'flip_rotation':            {'color': 'tab:green',  'marker': 'D', 'linestyle': '-'},
+    'flip_crop':                {'color': 'tab:red',    'marker': 'v', 'linestyle': '-'},
+    'flip_cutmix':              {'color': 'tab:purple', 'marker': '*', 'linestyle': '-'},
+    'flip_color':               {'color': 'tab:brown',  'marker': 'X', 'linestyle': '-'},
+    'rotation_color':           {'color': 'tab:orange', 'marker': '^', 'linestyle': '-'},
+    'rotation_crop':            {'color': 'tab:pink',   'marker': 'P', 'linestyle': '-'},
+    'rotation_deg_15_cutmix':   {'color': 'tab:gray',   'marker': '<', 'linestyle': '-'},
+    'color_0.3_cutmix':         {'color': 'tab:olive',  'marker': '>', 'linestyle': '-'},
+    'color_crop':               {'color': 'tab:cyan',   'marker': 'o', 'linestyle': '-'},
+
+
+    #_______________________________________________________________________________
+    # Three transformations
+    #_______________________________________________________________________________
+    #write your code here:
+    'rotation_crop_cutmix':     {'color': 'tab:blue',   'marker': 's', 'linestyle': '-'},
+    'flip_color_crop':          {'color': 'tab:brown',  'marker': 'X', 'linestyle': '-'},
+    'rotation_color_cutmix':    {'color': 'tab:orange', 'marker': '^', 'linestyle': '-'},
+    'flip_rotation_crop':       {'color': 'tab:green',  'marker': 'D', 'linestyle': '-'},
+    'flip_color_cutmix':        {'color': 'tab:purple', 'marker': '*', 'linestyle': '-'},
+    'rotation_color_crop':      {'color': 'tab:pink',   'marker': 'P', 'linestyle': '-'},
+    'flip_rotation_color':      {'color': 'tab:red',    'marker': 'v', 'linestyle': '-'},
+    'flip_rotation_cutmix':     {'color': 'tab:gray',   'marker': '<', 'linestyle': '-'},
+    'flip_crop_cutmix':         {'color': 'tab:olive',  'marker': '>', 'linestyle': '-'},
+    'color_crop_cutmix':        {'color': 'tab:cyan',   'marker': 'o', 'linestyle': '-'},
+
+    # _______________________________________________________________________________
+    # Four transformations
+    # _______________________________________________________________________________
+    #write your code here:
+    'flip_rotation_crop_cutmix':    {'color': 'tab:blue',   'marker': 's', 'linestyle': '-'},
+    'flip_color_crop_cutmix':       {'color': 'tab:brown',  'marker': 'X', 'linestyle': '-'},
+    'rotation_color_crop_cutmix':   {'color': 'tab:orange', 'marker': '^', 'linestyle': '-'},
+    'flip_rotation_color_crop':     {'color': 'tab:green',  'marker': 'D', 'linestyle': '-'},
+    'flip_rotation_color_cutmix':   {'color': 'tab:purple', 'marker': '*', 'linestyle': '-'},
+    
+
+    # _______________________________________________________________________________
+    # Five transformations
+    # _______________________________________________________________________________
+    #write your code here:
+    'flip_rotation_color_crop_cutmix': {'color': 'tab:pink',   'marker': 'P', 'linestyle': '-'},
+
+    # _______________________________________________________________________________
+    # Smart transformations
+    # _______________________________________________________________________________
+    #write your code here:
+    'auto_augment':  {'color': 'tab:cyan',   'marker': 'o', 'linestyle': '-'},
 }
 
 

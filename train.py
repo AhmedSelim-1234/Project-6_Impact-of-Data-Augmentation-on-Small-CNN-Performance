@@ -1,8 +1,10 @@
+import numpy as np
 from simple_model import SimpleCNN
 from dataset import get_dataloader
 import torch
 import torch.optim as optim
 import torch.nn as nn
+from torchvision.transforms import v2
 
 import copy
 import json
@@ -21,25 +23,91 @@ LEARNING_RATE = 0.001
 WEIGHT_DECAY  = 0.0005
 NUM_CLASSES   = 10  # CIFAR-10 always has 10 classes
 
+# cutmix (combine two images transformation)
+cutmix = v2.CutMix(num_classes=10, alpha=1.0)
+CUTMIX_PROB = 0.5
 
 # ____________________________________________________
 # Experiment settings
 # ____________________________________________________
 PERCENTAGES = [0.1, 0.25, 0.50, 1.0]
 
-COMBINATIONS = [
-    'none',                      # baseline — no augmentation
-    'flip',                      # + horizontal flip
-    'flip_rotation',             # + rotation
-    'flip_rotation_color',       # + color jitter
-    'flip_rotation_color_crop',  # + random crop
-    'full',                      # + random erasing (everything)
+# _____________________________________________________
+# List your combinations here
+# make a new list variable for every combinations group (ones, twos, threes, fours, fives, smart)
+# then assign this list to COMBINATIONS variable
+# e.g: COMBINATIONS = ONES_COMBINATIONS
+# _____________________________________________________
+#ones combinations
+ONES_COMBINATIONS = [
+    'none',
+    'none_cutmix',
+    'flip',
+    'rotation_deg_15',
+    'rotation_deg_30',
+    'rotation_deg_90',
+    'color_0.2',
+    'color_0.3',
+    'crop'
 ]
+
+#two combinations
+TWO_COMBINATIONS = [
+    'none',
+    'crop_cutmix',
+    'flip_rotation',
+    'flip_crop',
+    'flip_cutmix',
+    'flip_color',
+    'rotation_color',
+    'rotation_crop',
+    'rotation_deg_15_cutmix',
+    'color_0.3_cutmix',
+    'color_crop',
+]
+
+#three combinations
+#write here:
+THREE_COMBINATIONS = [
+    'none',
+    'rotation_crop_cutmix',
+    'rotation_color_cutmix',
+    'rotation_color_crop',
+    'flip_color_cutmix',
+    'flip_rotation_cutmix',
+    'flip_crop_cutmix',
+    'flip_color_crop',
+    'flip_rotation_crop',
+    'flip_rotation_color',
+    'color_crop_cutmix',
+]
+#four & five combinations
+#write here:
+FOUR_AND_FIVE_COMBINATIONS = [
+    'none',
+    'flip_rotation_crop_cutmix',
+    'flip_color_crop_cutmix',
+    'rotation_color_crop_cutmix',
+    'flip_rotation_color_cutmix',
+    'flip_rotation_color_crop',
+    'flip_rotation_color_crop_cutmix',
+]
+
+SMART_COMBINATIONS = [
+    'none',
+    'auto_augment',
+]
+# COMBINATIONS = ONES_COMBINATIONS
+# COMBINATIONS = TWO_COMBINATIONS
+# COMBINATIONS = THREE_COMBINATIONS
+# COMBINATIONS = FOUR_AND_FIVE_COMBINATIONS
+COMBINATIONS = SMART_COMBINATIONS
+
 
 # ____________________________________________________
 # Training & Validation Functions
 # ____________________________________________________
-def train_epoch(model, train_loader, loss_function, optimizer, device):
+def train_epoch(model, train_loader, loss_function, optimizer, device, use_cutmix=False):
     """
     Performs a single training epoch.
 
@@ -60,6 +128,10 @@ def train_epoch(model, train_loader, loss_function, optimizer, device):
     for images, labels in train_loader:
         # Move images and labels to the specified device
         images, labels = images.to(device), labels.to(device)
+
+        #apply cutmix (mixing two images) if required:
+        if use_cutmix and np.random.rand() < 0.5:
+            images, labels = cutmix(images, labels)
 
         # Clear the gradients of all optimized variables
         optimizer.zero_grad()
@@ -143,7 +215,7 @@ def validate_epoch(model, val_loader, loss_function, device):
 
     return epoch_val_loss, epoch_accuracy
 
-def training_loop(model, train_loader, val_loader, loss_function, optimizer, num_epochs, device):
+def training_loop(model, train_loader, val_loader, loss_function, optimizer, num_epochs, device, use_cutmix = False):
     """
     Trains and validates a PyTorch neural network model.
 
@@ -176,7 +248,7 @@ def training_loop(model, train_loader, val_loader, loss_function, optimizer, num
     # Loop over the specified number of epochs
     for epoch in range(num_epochs):
         # Perform one epoch of training
-        epoch_loss = train_epoch(model, train_loader, loss_function, optimizer, device)
+        epoch_loss = train_epoch(model, train_loader, loss_function, optimizer, device, use_cutmix)
         train_losses.append(epoch_loss)
 
         # Perform one epoch of validation
@@ -227,11 +299,16 @@ def run_experiment(percentage, augmentation_combo_name):
     print(f"Experiment: {percentage*100:.0f}% data, {augmentation_combo_name}")
     print(f"{'='*50}")
 
+    #check whether cutmix exists or not
+    use_cutmix = 'cutmix' in augmentation_combo_name
+    base_combo_name = augmentation_combo_name.replace('_cutmix', '')
+
     # Get data
     train_loader, test_loader = get_dataloader(
         percentage,
         batch_size=BATCH_SIZE,
-        augmentation_combo_name=augmentation_combo_name,
+        augmentation_combo_name= base_combo_name
+        # augmentation_combo_name=augmentation_combo_name,
     )
 
     # model for each experiment
@@ -253,7 +330,8 @@ def run_experiment(percentage, augmentation_combo_name):
         loss_function=loss_function,
         optimizer=optimizer,
         num_epochs=NUM_EPOCHS,
-        device=device
+        device=device,
+        use_cutmix=use_cutmix
     )
 
     # Final accuracy = best accuracy achieved
@@ -319,6 +397,8 @@ plot_bar_per_percentage(all_results, PERCENTAGES, COMBINATIONS)
 
 # Plot 3: THE main summary graph (1 graph, goes in report!)
 # Plot the big final summary
+#for all percentages (it will produce error if we didn't pass the 4 percentages[0.1, 0.25, 0.5, 1.0] experiments
+#so comment this line if you will try one percentage only (e.g: 0.1)
 plot_final_summary(all_results, PERCENTAGES, COMBINATIONS)
 
 
