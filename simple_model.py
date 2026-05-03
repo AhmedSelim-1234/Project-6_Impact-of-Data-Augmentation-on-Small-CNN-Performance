@@ -8,8 +8,7 @@ class CNNBlock(nn.Module):
 
         self.block = nn.Sequential(
             nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, padding=padding),
-            #This layer needs to know the number of channels of its input, which is the output of the previous convolutional layer.
-            nn.BatchNorm2d(out_channels), # # Makes training more stable and faster
+            nn.BatchNorm2d(out_channels), 
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
@@ -20,37 +19,28 @@ class CNNBlock(nn.Module):
 class SimpleCNN(nn.Module):
     def __init__(self, num_classes):
         super(SimpleCNN, self).__init__()
-        #first convolutional block
+        
+        # Layer 1
         self.conv_block1 = CNNBlock(in_channels=3, out_channels=32)
 
-        #second convolutional block
+        # Layer 2
         self.conv_block2 = CNNBlock(in_channels=32, out_channels=64)
 
-        #third convolutional block
+        # Layer 3
         self.conv_block3 = CNNBlock(in_channels=64, out_channels=128)
 
-        # Define the fully connected classifier block.
+        # Layer 4: fully connected classifier block.
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(128 * 4 * 4, 512),
-            nn.ReLU(),
-            # dropout layer to prevent overfitting by randomly setting a fraction of inputs to zero.
+
             nn.Dropout(0.5),
-            nn.Linear(512, num_classes),
+            # Direct mapping from flattened features to output classes (4th weighted layer)
+            nn.Linear(128 * 4 * 4, num_classes),
         )
 
     def forward(self, x):
-        #pass input through the first convolutional block
         x = self.conv_block1(x)
-
-        #pass feature maps through the second convolutional block
         x = self.conv_block2(x)
-
-        #pass feature maps through the third convolutional block
         x = self.conv_block3(x)
-
-        # Flatten the output for the fully connected layers
-        # Pass the flattened features through the fully connected layers
         x = self.classifier(x)
-
         return x
