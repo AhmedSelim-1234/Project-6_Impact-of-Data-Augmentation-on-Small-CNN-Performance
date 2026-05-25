@@ -11,12 +11,6 @@ Experiments
   Exp 3 (Higher LR): LR = 0.01   | augmentation = 'none'
   Exp 4 (Very High): LR = 0.05   | augmentation = 'none'
 
-Why these values?
-  • 0.0001 → conservative; often under-fits within 30 epochs
-  • 0.001  → your original setting (baseline)
-  • 0.01   → 10× baseline; tests faster convergence vs instability
-  • 0.05   → aggressive; likely diverges or oscillates — useful error-analysis case
-
 All other hyper-parameters are frozen (same as train.py):
   BATCH_SIZE   = 64
   WEIGHT_DECAY = 0.0005
