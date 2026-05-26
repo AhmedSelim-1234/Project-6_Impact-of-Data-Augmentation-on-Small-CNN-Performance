@@ -2,14 +2,18 @@
  params.percentage             params.augmentations  metrics.best_val_accuracy
              100.0                             flip                      82.34
              100.0                       flip_color                      82.26
+			 100.0 		albumenatations(flip_color)						 82.22
+			 100.0			       			   none			 			 81.69
              100.0                    flip_rotation                      81.46
              100.0               flip_color_erasing                      81.29
              100.0                            color                      81.21
+			 100.0 albumenatations(rotation_erasing)					 82.22
              100.0                     flip_erasing                      81.13
              100.0                   rotation_color                      81.11
              100.0                  flip_color_crop                      81.06
              100.0                          erasing                      81.04
              100.0                       color_crop                      80.92
+			 100.0 						autoaugment 					 80.87
              100.0                             crop                      80.87
              100.0                        flip_crop                      80.87
              100.0                     crop_erasing                      80.81
@@ -17,6 +21,7 @@
              100.0              flip_rotation_color                      80.69
              100.0                flip_crop_erasing                      80.56
              100.0                 rotation_erasing                      80.42
+			 50.0 		albumenatations(flip_color)						 80.07
              100.0          flip_color_crop_erasing                      80.01
              100.0      flip_rotation_color_erasing                      79.95
              100.0           rotation_color_erasing                      79.86
@@ -37,6 +42,7 @@
              100.0      rotation_color_crop_erasing                      78.74
               50.0                  flip_color_crop                      78.66
               50.0                    flip_rotation                      78.59
+			  50.0 albumenatations(rotation_erasing)					 78.58
              100.0       flip_rotation_crop_erasing                      78.51
               50.0              flip_rotation_color                      78.51
              100.0 flip_rotation_color_crop_erasing                      78.21
@@ -44,6 +50,7 @@
               50.0                flip_crop_erasing                      78.09
               50.0           rotation_color_erasing                      78.02
               50.0                       color_crop                      78.00
+			  50.0							   none						 77.78
               50.0                          erasing                      77.74
               50.0                 rotation_erasing                      77.65
               50.0                            color                      77.58
@@ -53,6 +60,7 @@
               50.0            flip_rotation_erasing                      77.38
               50.0                    color_erasing                      77.28
               50.0      flip_rotation_color_erasing                      77.16
+			  50.0 						autoaugment 					 77.12  
               50.0                     crop_erasing                      77.04
               50.0         flip_rotation_color_crop                      76.95
               50.0                    rotation_crop                      76.77
@@ -64,11 +72,13 @@
               25.0                             flip                      76.09
               25.0                       flip_color                      76.02
               25.0               flip_color_erasing                      75.45
+			  25.0 		albumenatations(flip_color)						 75.34
               25.0              flip_rotation_color                      75.22
               25.0                        flip_crop                      75.20
               25.0                       color_crop                      74.93
               25.0                  flip_color_crop                      74.80
               25.0                             crop                      74.50
+			  25.0 albumenatations(rotation_erasing)					 74.48
               25.0                    flip_rotation                      74.43
               25.0               flip_rotation_crop                      74.40
               25.0                flip_crop_erasing                      74.40
@@ -79,12 +89,14 @@
               25.0      flip_rotation_color_erasing                      74.10
               25.0            flip_rotation_erasing                      74.08
               25.0                          erasing                      74.00
+			  25.0 						autoaugment 					 73.89
               25.0         flip_rotation_color_crop                      73.73
               25.0                 rotation_erasing                      73.70
               25.0          flip_color_crop_erasing                      73.58
               25.0           rotation_color_erasing                      73.51
               25.0                    color_erasing                      73.41
               25.0               color_crop_erasing                      73.24
+			  25.0							   none					     73.19
               25.0                            color                      72.83
               25.0       flip_rotation_crop_erasing                      72.54
               25.0                    rotation_crop                      72.20
@@ -94,6 +106,7 @@
               25.0 flip_rotation_color_crop_erasing                      71.61
               25.0      rotation_color_crop_erasing                      71.51
               10.0                       flip_color                      69.59
+			  10.0 		albumenatations(flip_color)						 69.31
               10.0                     flip_erasing                      69.10
               10.0               flip_color_erasing                      68.99
               10.0                        flip_crop                      68.84
@@ -110,15 +123,18 @@
               10.0                       color_crop                      67.67
               10.0                    color_erasing                      67.57
               10.0                     crop_erasing                      67.35
+			  10.0 albumenatations(rotation_erasing)					 67.31
               10.0      flip_rotation_color_erasing                      67.30
               10.0                            color                      67.22
               10.0           rotation_color_erasing                      67.14
+			  10.0 						autoaugment 					 67.11
               10.0         flip_rotation_color_crop                      67.06
               10.0               color_crop_erasing                      67.00
               10.0                 rotation_erasing                      66.91
               10.0                flip_crop_erasing                      66.90
               10.0              rotation_color_crop                      66.46
               10.0               flip_rotation_crop                      65.87
+			  10.0 							   none 					 65.84
               10.0                          erasing                      65.53
               10.0      rotation_color_crop_erasing                      65.40
               10.0 flip_rotation_color_crop_erasing                      64.70
