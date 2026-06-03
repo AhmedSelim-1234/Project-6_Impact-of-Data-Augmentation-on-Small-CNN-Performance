@@ -1,0 +1,6 @@
+albumentations==2.0.8
+matplotlib>=3.9.0
+numpy>=2.0.2
+torch>=2.9.1
+torchvision>=0.24.1
+mlflow==3.12.0
